@@ -1,0 +1,96 @@
+#####################################################################################
+##スニペット
+[[plugins]]
+repo = 'Shougo/neosnippet'
+on_i  = 1
+hook_source = '''
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k>     <Plug>(neosnippet_expand_target)
+	 
+	" SuperTab like snippets behavior.
+	imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+	\ "\<Plug>(neosnippet_expand_or_jump)"
+	\: pumvisible() ? "\<C-n>" : "\<TAB>"
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+	\ "\<Plug>(neosnippet_expand_or_jump)"
+	\: "\<TAB>"
+	if has('conceal')
+	  set conceallevel=2 concealcursor=i
+	endif
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_i  = 1
+
+####################################################################################
+##1行のコードと複数行のコードを相互変換
+[[plugins]]
+repo = 'AndrewRadev/splitjoin.vim'
+on_i  = 1
+
+#####################################################################################
+##自動補完
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i  = 1
+hook_source = '''
+	let g:neocomplete#enable_at_startup  = 1
+	let g:neocomplete#enable_ignore_case = 1
+	let g:neocomplete#enable_smart_case  = 1
+	" Windowsは以下の辞書を利用
+	if dein#util#_is_windows()
+		let g:neocomplete#sources#dictionary#dictionaries = {
+		\ 'default': '',
+		\ 'php':     $HOME . '/.vim/dicts/php.dict',
+		\ 'js':      $HOME . '/.vim/dicts/javascript.dict'
+		\}
+	endif
+'''
+
+####################################################################################
+#括弧を自動で閉じる => neocompleteと相性が悪いために没
+#日本語入力中に括弧補完が動作するとIEMが終了してしまう
+#[[plugins]]
+#repo = 'Townk/vim-autoclose'
+#on_i = 1
+
+
+####################################################################################
+# ctagsリスト表示
+[[plugins]]
+repo = 'majutsushi/tagbar'
+on_i = 1
+hook_source = '''
+	if dein#check_install(['majutsushi/tagbar'])
+		" Width (default 40)
+		let g:tagbar_width = 20
+		" Map for toggle
+		nn <silent> <leader>t :TagbarToggle<CR>
+	endif
+'''
+
+#####################################################################################
+# CSSカラー表示
+[[plugins]]
+repo = 'lilydjwg/colorizer'
+on_ft = 'css'
+
+###################################################################################
+# MarkDown プラグイン
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown','mkd','md']
+hook_add = '''
+	let g:vim_markdown_folding_disabled=1
+'''
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = ['markdown','mkd', 'md']
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_ft = ['markdown','mkd','md']
+

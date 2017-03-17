@@ -1,0 +1,137 @@
+####################################################################################
+#プラグイン管理（dein）
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+####################################################################################
+#vimproc
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+# hook_post_update = '''
+  # if dein#util#_is_windows()
+	 # let cmd = 'tools\\update-dll-mingw'
+  # elseif dein#util#_is_cygwin()
+	 # let cmd = 'make -f make_cygwin.mak'
+  # elseif dein#util#_is_mac()
+	 # let cmd = 'make -f ~/.vim/dein/.cache/.vimrc/.dein/make_mac.mak'
+  # elseif executable('gmake')
+	 # let cmd = 'make'
+  # else
+	 # let cmd = 'make'
+  # endif
+  # let g:dein#plugin.build = cmd
+# '''
+hook_add = '''
+	if has('mac')
+	  let g:vimproc_dll_path = $HOME . '/.vim/dein/repos/github.com/Shougo/vimproc.vim/autoload/vimproc_mac.so'
+	elseif has('win64')
+	  let g:vimproc_dll_path = $HOME . '/.vim/dein/repos/github.com/Shougo/vimproc.vim/autoload/vimproc_win64.dll'
+	elseif has('win32')
+	  let g:vimproc_dll_path = $HOME . '/.vim/dein/repos/github.com/Shougo/vimproc.vim/autoload/vimproc_win32.dll'
+	endif
+'''
+
+####################################################################################
+#vim-dispatch
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+
+####################################################################################
+#unite
+[[plugins]]
+repo = 'Shougo/unite.vim'
+hook_add = '''
+	"インサートモードで開始
+	let g:unite_enable_start_insert=1
+	"ヒストリー/ヤンク機能を有効化
+	let g:unite_source_history_yank_enable =1
+	let g:unite_source_file_mru_limit = 200
+	let g:unite_source_find_command="find.exe"
+	nmap <Space> [unite]
+	"prefix keyの設定
+	"スペースキーとaキーでカレントディレクトリを表示
+	nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+	"スペースキーとfキーでバッファと最近開いたファイル一覧を表示
+	nnoremap <silent> [unite]f :<C-u>Unite<Space>buffer file_mru<CR>
+	"スペースキーとdキーで最近開いたディレクトリを表示
+	nnoremap <silent> [unite]d :<C-u>Unite<Space>directory_mru<CR>
+	"スペースキーとbキーでバッファを表示
+	nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+	"スペースキーとrキーでレジストリを表示
+	nnoremap <silent> [unite]r :<C-u>Unite<Space>register<CR>
+	"スペースキーとtキーでタブを表示
+	nnoremap <silent> [unite]t :<C-u>Unite<Space>tab<CR>
+	"スペースキーとhキーでヒストリ/ヤンクを表示
+	nnoremap <silent> [unite]h :<C-u>Unite<Space>history/unite<CR>
+	"スペースキーとENTERキーでfile_rec:!
+	nnoremap <silent> [unite]<CR> :<C-u>Unite<Space>file_rec:!<CR>
+	"unite.vimを開いている間のキーマッピング
+	autocmd FileType unite call s:unite_my_settings()
+	function! s:unite_my_settings()"{{{
+		 " ESCでuniteを終了
+		 nmap <buffer> <ESC> <Plug>(unite_exit)
+	endfunction"}}}
+'''
+#####################################################################################
+##unite拡張
+[[plugins]]
+repo      = 'Shougo/neomru.vim'
+
+####################################################################################
+#カラースキーム
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
+[[plugins]]
+repo = 'nanotech/jellybeans.vim'
+
+####################################################################################
+#インデントの深さを視覚化
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_add = '''
+	let g:indent_guides_auto_colors = 0
+	autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+	autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+'''
+
+####################################################################################
+#ステータスライン拡張
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+####################################################################################
+#gitラッパープラグイン
+# 現時点ではgit管理を行わないため使用中止
+# [[plugins]]
+# repo = 'tpope/vim-fugitive'
+
+#####################################################################################
+##コメントアウト
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+# デフォルトマッピングを無効
+# コメントアウトのマッピング
+hook_add = '''
+	let g:NERDCreateDefaultMappings = 0
+	let g:NERDSpaceDelims = 2
+	:map ,, <Plug>NERDCommenterToggle
+'''
+
+###################################################################################
+# 文字列整形
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+	" ヴィジュアルモードで選択し，easy-align 呼んで整形．(e.g. vip<Enter>)
+	vmap <Enter> <Plug>(EasyAlign)
+	" easy-align を呼んだ上で，移動したりテキストオブジェクトを指定して整形．(e.g. gaip)
+	nmap ga <Plug>(EasyAlign)
+'''
+###################################################################################
+# ファイラー
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+hook_add = '''
+	let g:vimfiler_as_default_explorer = 1
+	nnoremap <silent> <F4> :<C-u>VimFilerBufferDir -split -simple -winwidth=35 -no-quit<CR>
+'''

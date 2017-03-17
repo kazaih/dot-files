@@ -1,0 +1,46 @@
+#####################################################################################
+##php補完拡張
+## Windows以外で辞書作成する場合は次のコマンドを呼ぶ :PhpMakeDict
+[[plugins]]
+repo = 'violetyk/neocomplete-php.vim'
+on_ft = ['php']
+hook_add = '''
+	let g:neocomplete_php_locale = "ja"
+'''
+
+#####################################################################################
+##phpシンタックス
+[[plugins]]
+repo = 'scrooloose/syntastic'
+on_ft = ['php']
+hook_source = '''
+	set statusline+=%#warningmsg#
+	set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 0
+'''
+
+####################################################################################
+# ctags自動保存
+[[plugins]]
+repo = 'szw/vim-tags'
+hook_add = '''
+	"ここで記載のパスは、ctagsイスストール先によって変更する
+	let g:vim_tags_auto_generate        = 1
+	let g:vim_tags_extension            = '.tags'
+	let g:vim_tags_use_vim_dispatch     = 1
+	let g:vim_tags_ctags_binary         = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+	let g:vim_tags_project_tags_command = "/usr/local/Cellar/ctags/5.8_1/bin/ctags -R {OPTIONS} {DIRECTORY} 2>/dev/null"
+	let g:vim_tags_gems_tags_command    = "/usr/local/Cellar/ctags/5.8_1/bin/ctags -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+'''
+
+####################################################################################
+# scpアップローダー
+[[plugins]]
+repo = 'ryoppy/vim-scp-upload'
+hook_add = '''
+	nnoremap <C-U> <ESC>:call ScpUpload()<CR>
+'''

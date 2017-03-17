@@ -1,0 +1,25 @@
+####################################################################################
+# ctags自動保存
+[[plugins]]
+repo = 'kazaih/vim-tags'
+hook_add = '''
+	"ここで記載のパスは、ctagsイスストール先によって変更する
+	let g:vim_tags_auto_generate        = 1
+	let g:vim_tags_extension            = '.tags'
+	let g:vim_tags_use_vim_dispatch     = 1
+	let g:vim_tags_ctags_binary         = $HOME . '/ctags/ctags.exe'
+	let g:vim_tags_project_tags_command = $HOME . '/ctags/ctags.exe -R {OPTIONS} {DIRECTORY}'
+	let g:vim_tags_gems_tags_command    = $HOME . '/ctags/ctags.exe -R {OPTIONS} `bundle show --paths`'
+'''
+
+####################################################################################
+# WinSCPラッパープラグイン
+[[plugins]]
+repo = 'kazaih/winscp-uploader.vim'
+hook_add = '''
+	nmap <silent> <C-U> :call WinSCPUpload()<CR>
+	"let g:winscp_uploader_use_vim_dispatch = 1
+	if filereadable($HOME . "/winscp-uploader.conf")
+		source ~/winscp-uploader.conf
+	endif
+'''
