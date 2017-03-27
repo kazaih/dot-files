@@ -1,4 +1,4 @@
-"何で動いているか調べる
+﻿"何で動いているか調べる
 let s:is_windows  =  has('win16') || has('win32') || has('win64') || has('win32unix')
 let s:is_mac      =  has('macunix') || has('mac')
 let s:is_unix     =  has('unix')
@@ -26,7 +26,7 @@ highlight Normal guifg=#ffffff guibg=#000000
 if has('win64')
 elseif has('win32')
 	set guifont=Migu_1M:h11
-	set guifontwide=Migu_1M:h11
+"	set guifontwide=Migu_1M:h11
 endif
 
 "IMEオン時のカーソルカラー
